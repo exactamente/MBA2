@@ -1,0 +1,665 @@
+﻿<Application x:Class="MBA2.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:dg="http://schemas.microsoft.com/wpf/2008/toolkit"
+			 xmlns:m="clr-namespace:MBA2.Model"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <!--<SolidColorBrush x:Key="backgroundColor" Color="#F0F0F0"/>
+			<SolidColorBrush x:Key="foregroundColor" Color="#000000"/>
+			<SolidColorBrush x:Key="foregroundColorSecondary" Color="#6D6D6D"/>
+			<SolidColorBrush x:Key="borderColor" Color="#D9D9D9"/>
+			<SolidColorBrush x:Key="inputBackgroundColor" Color="#ffffff"/>
+			<SolidColorBrush x:Key="inputBorderColor" Color="#D9D9D9"/>
+			<SolidColorBrush x:Key="outputBackgroundColor" Color="#ffffff"/>
+			<SolidColorBrush x:Key="listViewBackgroundColor" Color="#ffffff"/>
+			<SolidColorBrush x:Key="menuBackgroundColor" Color="#F5F6F7"/>
+
+			<SolidColorBrush x:Key="highlightedColor" Color="#D1E8FF"/>
+			<SolidColorBrush x:Key="selectedColor" Color="#007ACC"/>-->
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Colors/Dark.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/Datagrid.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <!--<Style TargetType="{x:Type TextBox}">
+                <Setter Property="Background" Value="{StaticResource inputBackgroundColor}"></Setter>
+                <Setter Property="Foreground" Value="{StaticResource foregroundColor}"></Setter>
+                <Setter Property="BorderBrush" Value="{StaticResource inputBorderColor}"></Setter>
+                <Setter Property="OverridesDefaultStyle" Value="True"></Setter>
+                <Setter Property="CaretBrush" Value="White" />
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                            <Border Name="Border"
+									Padding="1"
+									BorderThickness="1"
+									Background="{TemplateBinding Background}"
+									BorderBrush="{TemplateBinding BorderBrush}">
+                                <ScrollViewer x:Name="PART_ContentHost"
+											  Margin="0"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        --><!-- Mouse Over --><!--
+                                        <Condition Property="IsEnabled" Value="True" />
+                                        <Condition Property="IsMouseOver" Value="True" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="BorderBrush" Value="{StaticResource inputBorderColor}"/>
+                                    <Setter Property="Foreground" Value="{StaticResource foregroundColor}" />
+                                </MultiTrigger>
+
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        --><!-- Desactivé--><!--
+                                        <Condition Property="IsEnabled" Value="False" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="BorderBrush" Value="{StaticResource inputBorderColor}"/>
+                                    <Setter Property="Foreground" Value="{StaticResource foregroundColor}"/>
+                                </MultiTrigger>
+
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        --><!-- Focus--><!--
+                                        <Condition Property="IsEnabled" Value="True" />
+                                        <Condition Property="IsFocused" Value="True" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="BorderBrush" Value="{StaticResource inputBorderColor}"/>
+                                    <Setter Property="Foreground" Value="{StaticResource foregroundColor}"/>
+                                </MultiTrigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>-->
+			
+            <!--<Style TargetType="{x:Type TextBox}">
+                <Setter Property="Background" Value="{StaticResource inputBackgroundColor}"></Setter>
+                <Setter Property="Foreground" Value="{StaticResource foregroundColor}"></Setter>
+                <Setter Property="BorderBrush" Value="{StaticResource inputBorderColor}"></Setter>
+                --><!--<Setter Property="OverridesDefaultStyle" Value="True"></Setter>--><!--
+                <Setter Property="CaretBrush" Value="White" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type TextBox}">
+                            <Border Name="BorderRectangle" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1">
+                                <TextBox CaretBrush="{TemplateBinding CaretBrush}" Background="Transparent" Margin="1" Text="{TemplateBinding Text}" BorderThickness="0" Foreground="{TemplateBinding Foreground}"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    --><!--<Setter Property="Fill" Value="{StaticResource selectedColor}" TargetName="BorderRectangle"/>--><!--
+                                    <Setter TargetName="BorderRectangle" Property="BorderBrush" Value="{StaticResource selectedColor}"/>
+                                </Trigger>
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Setter TargetName="BorderRectangle" Property="BorderBrush" Value="{StaticResource selectedColor}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>-->
+
+            <Style x:Key="gridSplitterStyle" TargetType="{x:Type GridSplitter}">
+                <Setter Property="Background" Value="{StaticResource backgroundColor}"></Setter>
+                <Setter Property="BorderBrush" Value="{StaticResource backgroundColor}"></Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="{StaticResource borderColor}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+
+            <Style TargetType="{x:Type Menu}" x:Key="menuStyle">
+                <Style.Resources>
+                    <Style x:Key="{x:Static MenuItem.SeparatorStyleKey}" TargetType="Separator">
+                        <Setter Property="Height" Value="1"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Separator">
+                                    <Border BorderBrush="{StaticResource borderColor}" BorderThickness="1" Margin="28,0,0,0"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    <Style TargetType="{x:Type MenuItem}">
+                        <Setter Property="Foreground" Value="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type MenuItem}">
+                                    <!--Border 1-->
+                                    <Border
+										x:Name="Border"
+										Background="Transparent"
+										BorderBrush="Transparent"
+										BorderThickness="1"
+										Height="30"
+										SnapsToDevicePixels="False">
+                                        <Grid x:Name="Grid">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition x:Name="Col0" SharedSizeGroup="MenuItemIconColumnGroup" MinWidth="28" Width="Auto"/>
+                                                <ColumnDefinition SharedSizeGroup="MenuTextColumnGroup" Width="Auto"/>
+                                                <ColumnDefinition SharedSizeGroup="MenuItemIGTColumnGroup" Width="Auto"/>
+                                                <ColumnDefinition x:Name="Col3" Width="14"/>
+                                            </Grid.ColumnDefinitions>
+                                            <ContentPresenter
+												x:Name="Icon"
+												Grid.Column="0"
+												VerticalAlignment="Center"
+												ContentSource="Icon"/>
+                                            <ContentPresenter
+												x:Name="HeaderHost"
+												Grid.Column="1"
+												Margin="{TemplateBinding Padding}"
+												RecognizesAccessKey="True"
+												ContentSource="Header"
+												VerticalAlignment="Center"/>
+                                            <ContentPresenter
+												x:Name="IGTHost"
+												Grid.Column="2"
+												Margin="80,0,8,0"
+												ContentSource="InputGestureText"
+												VerticalAlignment="Center"/>
+                                            <Grid
+												x:Name="ArrowPanel"
+												Grid.Column="3"
+												Margin="4,0,6,0"
+												VerticalAlignment="Center">
+                                                <Path
+													x:Name="ArrowPanelPath"
+													HorizontalAlignment="Right"
+													VerticalAlignment="Center"
+													Fill="{StaticResource foregroundColorSecondary}"
+													Data="M0,0 L0,8 L4,4 z"/>
+                                            </Grid>
+                                            <Popup
+												x:Name="SubMenuPopup"
+												IsOpen="{Binding Path=IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
+												Placement="Right"
+												HorizontalOffset="-1"
+												Focusable="false"
+												PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
+												AllowsTransparency="True">
+                                                <Grid Margin="0,0,5,5">
+                                                    <!--Border 2-->
+                                                    <Border
+														x:Name="SubMenuBorder"
+														BorderBrush="{StaticResource borderColor}"
+														BorderThickness="1"
+														Background="{StaticResource menuBackgroundColor}"
+														SnapsToDevicePixels="True">
+                                                        <Grid
+															x:Name="SubMenu"
+															Grid.IsSharedSizeScope="True"
+															Margin="2">
+                                                            <StackPanel
+																IsItemsHost="True" 
+                                                                KeyboardNavigation.DirectionalNavigation="Cycle"/>
+                                                        </Grid>
+                                                        <!--<Border.Effect>
+															<DropShadowEffect ShadowDepth="0" Color="Black"/>
+														</Border.Effect>-->
+                                                    </Border>
+                                                    <!--Border 3-->
+                                                    <Border
+														x:Name="TransitionBorder"
+														Margin="1,0,0,0"
+														Width="0"
+														Height="2"
+														VerticalAlignment="Top"
+														HorizontalAlignment="Left"
+														Background="{StaticResource menuBackgroundColor}"
+														SnapsToDevicePixels="False"
+														BorderThickness="1"
+														BorderBrush="{StaticResource menuBackgroundColor}"/>
+                                                </Grid>
+                                            </Popup>
+                                        </Grid>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="Role" Value="TopLevelHeader">
+                                            <!--<Setter Property="Padding" Value="6,0,6,2"/>-->
+                                            <Setter TargetName="SubMenuPopup" Property="Placement" Value="Bottom"/>
+                                            <Setter TargetName="Col0" Property="MinWidth" Value="0"/>
+                                            <Setter TargetName="Col3" Property="Width" Value="Auto"/>
+                                            <Setter TargetName="Icon" Property="Visibility" Value="Collapsed"/>
+                                            <Setter TargetName="IGTHost" Property="Visibility" Value="Collapsed" />
+                                            <Setter TargetName="ArrowPanel" Property="Visibility" Value="Collapsed"/>
+                                            <!--<Setter TargetName="SubMenuBorder" Property="BorderThickness" Value="1,1,1,1"/>-->
+                                            <!--<Setter TargetName="SubMenu" Property="Margin" Value="2,3,2,2"/>-->
+                                            <Setter TargetName="TransitionBorder" Property="Width" Value="{Binding ActualWidth, ElementName=Grid}"/>
+                                        </Trigger>
+                                        <Trigger Property="Role" Value="TopLevelItem">
+                                            <!--<Setter Property="Padding" Value="6,0,6,2"/>-->
+                                            <!--<Setter TargetName="Col0" Property="MinWidth" Value="0"/>-->
+                                            <!--<Setter TargetName="Col3" Property="Width" Value="Auto"/>-->
+                                            <Setter TargetName="Icon" Property="Visibility" Value="Collapsed"/>
+                                            <Setter TargetName="IGTHost" Property="Visibility" Value="Collapsed"/>
+                                            <Setter TargetName="ArrowPanel" Property="Visibility" Value="Collapsed"/>
+                                        </Trigger>
+                                        <Trigger Property="Role" Value="SubmenuHeader">
+                                            <Setter Property="DockPanel.Dock" Value="Top"/>
+                                            <!--<Setter Property="Padding" Value="10,3,0,3"/>-->
+                                            <!--<Setter TargetName="Border" Property="MinHeight" Value="22"/>-->
+                                            <Setter TargetName="Border" Property="Background" Value="{StaticResource menuBackgroundColor}"/>
+                                        </Trigger>
+                                        <Trigger Property="Role" Value="SubmenuItem">
+                                            <Setter Property="DockPanel.Dock" Value="Top"/>
+                                            <!--<Setter Property="Padding" Value="10,3,0,3"/>-->
+                                            <!--<Setter TargetName="Border" Property="MinHeight" Value="22"/>-->
+                                            <Setter TargetName="ArrowPanel" Property="Visibility" Value="Collapsed"/>
+                                            <Setter TargetName="Border" Property="Background" Value="{StaticResource menuBackgroundColor}"/>
+                                        </Trigger>
+
+                                        <MultiTrigger>
+                                            <MultiTrigger.Conditions>
+                                                <Condition Property="IsHighlighted" Value="true"/>
+                                                <Condition Property="Role" Value="TopLevelHeader"/>
+                                            </MultiTrigger.Conditions>
+                                            <Setter TargetName="Border" Property="Background" Value="{StaticResource menuBackgroundColor}"/>
+                                        </MultiTrigger>
+                                        <MultiTrigger>
+                                            <MultiTrigger.Conditions>
+                                                <Condition Property="IsHighlighted" Value="true"/>
+                                                <Condition Property="Role" Value="TopLevelItem"/>
+                                            </MultiTrigger.Conditions>
+                                            <Setter TargetName="Border" Property="Background" Value="{StaticResource menuBackgroundColor}"/>
+                                        </MultiTrigger>
+                                        <MultiTrigger>
+                                            <MultiTrigger.Conditions>
+                                                <Condition Property="IsHighlighted" Value="true"/>
+                                                <Condition Property="Role" Value="SubmenuHeader"/>
+                                            </MultiTrigger.Conditions>
+                                            <Setter TargetName="Border" Property="Background" Value="{StaticResource borderColor}"/>
+                                        </MultiTrigger>
+                                        <MultiTrigger>
+                                            <MultiTrigger.Conditions>
+                                                <Condition Property="IsHighlighted" Value="true"/>
+                                                <Condition Property="Role" Value="SubmenuItem"/>
+                                            </MultiTrigger.Conditions>
+                                            <Setter TargetName="Border" Property="Background" Value="{StaticResource borderColor}"/>
+                                        </MultiTrigger>
+                                        <MultiTrigger>
+                                            <MultiTrigger.Conditions>
+                                                <Condition Property="IsSubmenuOpen" Value="true"/>
+                                                <Condition Property="Role" Value="TopLevelHeader"/>
+                                            </MultiTrigger.Conditions>
+                                            <Setter TargetName="Border" Property="Background" Value="{StaticResource menuBackgroundColor}"/>
+                                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource borderColor}"/>
+                                            <!--<Setter TargetName="Border" Property="BorderThickness" Value="1,1,1,0"/>-->
+                                        </MultiTrigger>
+                                        <Trigger Property="IsSubmenuOpen" Value="true">
+                                            <Setter TargetName="ArrowPanelPath" Property="Fill" Value="{StaticResource selectedColor}"/>
+                                        </Trigger>
+                                        <Trigger Property="IsSuspendingPopupAnimation" Value="true">
+                                            <Setter TargetName="SubMenuPopup" Property="PopupAnimation" Value="None"/>
+                                        </Trigger>
+                                        <Trigger Property="Icon" Value="{x:Null}">
+                                            <Setter TargetName="Icon" Property="Visibility" Value="Collapsed"/>
+                                        </Trigger>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Foreground" Value="{StaticResource foregroundColorSecondary}"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Style.Resources>
+                <Setter Property="Background" Value="{StaticResource backgroundColor}"/>
+                <Setter Property="Foreground" Value="{StaticResource foregroundColor}"/>
+            </Style>
+
+
+
+            <!--
+			<Style x:Key="menuStyle" TargetType="{x:Type Menu}">
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="{x:Type Menu}">
+							<ContentPresenter Content="{TemplateBinding ItemsPanel}"/>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Style>
+
+			<Style x:Key="menuItemStyle" TargetType="{x:Type MenuItem}">
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="{x:Type MenuItem}">
+							<Border Name="ContentBorder"
+									Background="{StaticResource backgroundColor}"
+									BorderBrush="{StaticResource backgroundColor}"
+									BorderThickness="{TemplateBinding BorderThickness}">
+								<StackPanel Orientation="Horizontal"
+											HorizontalAlignment="Center">
+
+									<ContentPresenter ContentSource="Header" />
+									<ItemsPresenter Visibility="{TemplateBinding Visibility}"/>
+
+								</StackPanel>
+							</Border>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Style>
+-->
+            <Style x:Key="toolBarButtonStyle" TargetType="{x:Type Button}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Name="ContentBorder"
+                            Background="{StaticResource backgroundColor}"                            
+                            BorderBrush="{StaticResource backgroundColor}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                                <StackPanel 
+                                Orientation="Horizontal"
+									HorizontalAlignment="Center">
+                                    <!--<Image Height="26" HorizontalAlignment="Left">
+                                    <Image.Source>
+                                        <BitmapImage UriSource="images/add.png" />
+                                    </Image.Source>
+                                </Image>-->
+                                    <TextBlock Name="ContentText"
+                                    Foreground="{StaticResource foregroundColor}"
+                                    Text="{TemplateBinding Content}" 
+                                    Height="{TemplateBinding Height}" 
+                                    VerticalAlignment="Center"
+									HorizontalAlignment="Stretch"
+									Padding="5,2,10,2"/>
+
+                                </StackPanel>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <!--
+									<Setter TargetName="ContentText" Property="Foreground" Value="{StaticResource selectedColor}"></Setter>
+									-->
+                                    <Setter TargetName="ContentBorder" Property="Background" Value="{StaticResource borderColor}"></Setter>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="ContentText" Property="Foreground" Value="{StaticResource foregroundColor}"></Setter>
+                                    <Setter TargetName="ContentBorder" Property="Background" Value="{StaticResource selectedColor}"></Setter>
+                                    <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{StaticResource selectedColor}"></Setter>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="ContentText" Property="Foreground" Value="{StaticResource foregroundColorSecondary}"></Setter>
+                                    <Setter TargetName="ContentBorder" Property="Background" Value="{StaticResource borderColor}"></Setter>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+
+            </Style>
+
+            <Style x:Key="buttonStyle" TargetType="{x:Type Button}">
+                <Setter Property="Background" Value="{StaticResource inputBackgroundColor}"></Setter>
+                <Setter Property="Foreground" Value="{StaticResource foregroundColor}"></Setter>
+                <Setter Property="BorderBrush" Value="{StaticResource inputBorderColor}"></Setter>
+                <Setter Property="SnapsToDevicePixels" Value="True"></Setter>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Name="ContentBorder"
+                            Background="{StaticResource backgroundColor}"                            
+                            BorderBrush="{StaticResource borderColor}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                                <StackPanel 
+                                Orientation="Horizontal"
+									HorizontalAlignment="Center">
+                                    <!--<Image Height="26" HorizontalAlignment="Left">
+                                    <Image.Source>
+                                        <BitmapImage UriSource="images/add.png" />
+                                    </Image.Source>
+                                </Image>-->
+                                    <!--<TextBlock Name="ContentText"
+                                    Foreground="{StaticResource foregroundColor}"
+                                    Text="{TemplateBinding Content}" 
+                                    Height="{TemplateBinding Height}" 
+                                    VerticalAlignment="Center"
+									HorizontalAlignment="Center"/>-->
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                                </StackPanel>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <!--
+									<Setter TargetName="ContentText" Property="Foreground" Value="{StaticResource selectedColor}"></Setter>
+									-->
+                                    <Setter TargetName="ContentBorder" Property="Background" Value="{StaticResource borderColor}"></Setter>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Foreground" Value="{StaticResource foregroundColor}"></Setter>
+                                    <Setter TargetName="ContentBorder" Property="Background" Value="{StaticResource selectedColor}"></Setter>
+                                    <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{StaticResource selectedColor}"></Setter>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Foreground" Value="{StaticResource foregroundColorSecondary}"></Setter>
+                                    <Setter TargetName="ContentBorder" Property="Background" Value="{StaticResource borderColor}"></Setter>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+
+            </Style>
+
+            <Style x:Key="textBlockStyle" TargetType="{x:Type TextBlock}">
+                <Setter Property="Foreground" Value="{StaticResource foregroundColor}"></Setter>
+                <Setter Property="TextAlignment" Value="Left"></Setter>
+                <Setter Property="Margin" Value="5,5,5,0"></Setter>
+            </Style>
+
+            <Style x:Key="listViewItemStyle" TargetType="{x:Type ListViewItem}">
+                <Setter Property="Background" Value="{StaticResource listViewBackgroundColor}"></Setter>
+                <Setter Property="Foreground" Value="{StaticResource foregroundColor}"></Setter>
+                <Setter Property="BorderBrush" Value="{StaticResource borderColor}"></Setter>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                            <Border x:Name="PART_Border" Background="{TemplateBinding Background}" BorderThickness="0" BorderBrush="{StaticResource borderColor}" Margin="0" Padding="3">
+                                <ContentPresenter />
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="true">
+                                    <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource borderColor}"></Setter>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="true">
+                                    <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource borderColor}"></Setter>
+                                    <Setter Property="Foreground" Value="{StaticResource selectedColor}"></Setter>
+                                </Trigger>
+                                <!--
+								<Trigger Property="IsFocused" Value="true">
+									<Setter TargetName="PART_Border" Property="Background" Value="{StaticResource selectedColor}"></Setter>
+									<Setter Property="Foreground" Value="{StaticResource foregroundColor}"></Setter>
+								</Trigger>
+								-->
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="{StaticResource selectedColor}"></Setter>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="listViewStyle" TargetType="{x:Type ListView}">
+                <Setter Property="Background" Value="{StaticResource listViewBackgroundColor}"></Setter>
+                <Setter Property="Foreground" Value="{StaticResource foregroundColor}"></Setter>
+                <Setter Property="BorderBrush" Value="{StaticResource borderColor}"></Setter>
+                <Setter Property="Padding" Value="-1"/>
+            </Style>
+
+            <Style x:Key="listBoxStyle" TargetType="{x:Type ListBox}">
+                <Setter Property="Background" Value="{StaticResource outputBackgroundColor}"></Setter>
+                <Setter Property="Foreground" Value="{StaticResource foregroundColor}"></Setter>
+                <Setter Property="BorderBrush" Value="{StaticResource borderColor}"></Setter>
+            </Style>
+
+            <Style x:Key="tabItemStyle" TargetType="{x:Type TabItem}">
+                <Setter Property="Background" Value="Transparent"></Setter>
+                <Setter Property="SnapsToDevicePixels" Value="True"></Setter>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type TabItem}">
+                            <Border x:Name="PART_Border" Background="{StaticResource backgroundColor}" BorderThickness="0,0,0,1" BorderBrush="{StaticResource borderColor}" Margin="0,0,0,-1" Padding="5">
+                                <ContentPresenter ContentSource="Header" />
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="true">
+                                    <Setter TargetName="PART_Border" Property="BorderBrush" Value="{StaticResource borderColor}"></Setter>
+                                    <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource borderColor}"></Setter>
+                                    <Setter  Property="Foreground" Value="{StaticResource selectedColor}"></Setter>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="true">
+                                    <Setter TargetName="PART_Border" Property="BorderThickness" Value="1,1,1,0"></Setter>
+                                    <Setter TargetName="PART_Border" Property="Padding" Value="4,4,4,5"></Setter>
+                                    <Setter TargetName="PART_Border" Property="BorderBrush" Value="{StaticResource borderColor}"></Setter>
+                                    <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource outputBackgroundColor}"></Setter>
+                                    <Setter Property="Foreground" Value="{StaticResource selectedColor}"></Setter>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+
+
+                <Setter Property="Foreground" Value="{StaticResource foregroundColorSecondary}"></Setter>
+                <Setter Property="BorderBrush" Value="{StaticResource borderColor}"></Setter>
+            </Style>
+
+            <Style x:Key="tabControlStyle" TargetType="{x:Type TabControl}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type TabControl}">
+                            <Grid ClipToBounds="True" KeyboardNavigation.TabNavigation="Local">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Name="ColumnDefinition0" />
+                                    <ColumnDefinition Width="0" Name="ColumnDefinition1" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" Name="RowDefinition0" />
+                                    <RowDefinition Height="*" Name="RowDefinition1" />
+                                </Grid.RowDefinitions>
+                                <ScrollViewer HorizontalScrollBarVisibility="Auto"
+											  VerticalScrollBarVisibility="Disabled"
+											  Grid.Column="0"
+											  Grid.Row="0">
+                                    <Border x:Name="HeaderBorder"
+										BorderBrush="{StaticResource borderColor}"
+										BorderThickness="0,0,0,1"
+										Background="{StaticResource backgroundColor}">
+                                        <TabPanel IsItemsHost="True"
+											  Name="HeaderPanel"
+											  Panel.ZIndex="1"
+											  KeyboardNavigation.TabIndex="1"
+											  />
+                                    </Border>
+                                </ScrollViewer>
+                                <Grid Name="ContentPanel"
+									  KeyboardNavigation.TabIndex="2"
+									  KeyboardNavigation.TabNavigation="Local"
+									  KeyboardNavigation.DirectionalNavigation="Contained"
+									  Grid.Column="0"
+									  Grid.Row="1">
+                                    <Border Background="{StaticResource outputBackgroundColor}"
+											BorderThickness="1,0,1,1"
+											BorderBrush="{StaticResource borderColor}">
+                                        <ContentPresenter Content="{TemplateBinding SelectedContent}" 
+                                              ContentTemplate="{TemplateBinding SelectedContentTemplate}" 
+                                              ContentStringFormat="{TemplateBinding SelectedContentStringFormat}" 
+                                              ContentSource="SelectedContent" 
+                                              Name="PART_SelectedContentHost"
+                                              SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
+                                    </Border>
+                                </Grid>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+
+                                <Trigger Property="UIElement.IsEnabled" Value="False">
+                                    <Setter Property="TextElement.Foreground" Value="{StaticResource foregroundColor}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!--<Style x:Key="dataGridStyle" TargetType="{x:Type DataGrid}">
+				<Setter Property="Background" Value="{StaticResource backgroundColor}"/>
+				<Setter Property="BorderThickness" Value="0"/>
+				<Setter Property="ColumnHeaderHeight" Value="35"/>
+				<Setter Property="RowHeight" Value="35"/>
+				<Setter Property="HorizontalGridLinesBrush" Value="{StaticResource borderColor}"/>
+				<Setter Property="VerticalGridLinesBrush" Value="{StaticResource borderColor}"/>
+			</Style>-->
+
+            <Style x:Key="{x:Type CheckBox}" TargetType="CheckBox">
+                <Setter Property="SnapsToDevicePixels" Value="true"/>
+                <Setter Property="OverridesDefaultStyle" Value="true"/>
+                <!--<Setter Property="FocusVisualStyle"    Value="{StaticResource CheckBoxFocusVisual}"/>-->
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="CheckBox">
+                            <BulletDecorator Background="Transparent">
+                                <BulletDecorator.Bullet>
+                                    <Border x:Name="Border"
+											Width="13"
+											Height="13"
+											CornerRadius="0"
+											Background="{StaticResource backgroundColor}"
+											BorderThickness="1"
+											BorderBrush="{StaticResource borderColor}">
+                                        <Path
+											Width="7"
+											Height="7"
+											x:Name="CheckMark"
+											SnapsToDevicePixels="False"
+											Stroke="{StaticResource foregroundColorSecondary}"
+											StrokeThickness="2"
+											Data="M 0 0 L 7 7 M 0 7 L 7 0" />
+                                    </Border>
+                                </BulletDecorator.Bullet>
+                                <ContentPresenter Margin="4,0,0,0"
+												  VerticalAlignment="Center"
+												  HorizontalAlignment="Left"
+												  RecognizesAccessKey="True"/>
+                            </BulletDecorator>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsChecked" Value="false">
+                                    <Setter TargetName="CheckMark" Property="Visibility" Value="Collapsed"/>
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="{x:Null}">
+                                    <Setter TargetName="CheckMark" Property="Data" Value="M 0 7 L 7 0" />
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="true">
+                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource backgroundColor}" />
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="true">
+                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource backgroundColor}" />
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource borderColor}" />
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource backgroundColor}" />
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource borderColor}" />
+                                    <Setter Property="Foreground" Value="{StaticResource foregroundColor}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
